@@ -117,8 +117,8 @@ export const isModelConstructor = <T extends PersistentModel>(
 	);
 };
 
-export const isNullOrUndefined = (val: any) => {
-	return val === null || val === undefined;
+export const isNullOrUndefined = (val: any): boolean => {
+	return typeof val === 'undefined' || val === null || val === undefined;
 };
 
 export const establishRelation = (
