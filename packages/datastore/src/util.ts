@@ -117,6 +117,10 @@ export const isModelConstructor = <T extends PersistentModel>(
 	);
 };
 
+export const isNullOrUndefined = (val: any) => {
+	return val === null || val === undefined;
+};
+
 export const establishRelation = (
 	namespace: SchemaNamespace
 ): RelationshipType => {
