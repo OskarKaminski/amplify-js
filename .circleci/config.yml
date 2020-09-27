@@ -19,7 +19,7 @@ executors:
 
   macos-executor:
     macos:
-      xcode: 11.4.1
+      xcode: 11.7.0
 
 test_env_vars: &test_env_vars
   environment:
@@ -280,9 +280,8 @@ jobs:
     steps:
       - checkout
       - run: yarn config set workspaces-experimental true
-      - run: yarn --frozen-lockfile
-      - run: yarn run bootstrap
-      - run: yarn run build
+      - run: yarn
+      - run: yarn build
       - save_cache:
           key: amplify-ssh-deps-{{ .Branch }}
           paths:
@@ -300,8 +299,8 @@ jobs:
       - run:
           name: 'Run Amplify JS unit tests'
           command: |
-            yarn run test
-            yarn run coverage
+            yarn test
+            yarn coverage
 
   integ_setup:
     executor: build-executor
