@@ -279,9 +279,13 @@ jobs:
     executor: build-executor
     steps:
       - checkout
-      # deleting this in the pipeline so that we can generate a yarn.lock artifact
-      - run: rm .yarnrc
-      - run: yarn
+
+      - run:
+          name: yarn install
+          # deleting this before installing so that we can generate a yarn.lock artifact
+          command: |
+            rm .yarnrc
+            yarn
       - run: yarn build
       - save_cache:
           key: amplify-ssh-deps-{{ .Branch }}
@@ -291,8 +295,8 @@ jobs:
           root: /root
           paths:
             - amplify-js
-      # storing this as an artifact, so that we can quickly get a dependency diff
-      # with the last working build in the event that some upstream deps break it
+      # storing yarn.lock as an artifact, so that we can quickly get a dependency diff
+      # with the last working build in the event that some upstream deps break the build in the future
       - store_artifacts:
           path: yarn.lock
 
